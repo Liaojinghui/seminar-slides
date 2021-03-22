@@ -140,7 +140,7 @@ Looks great on desktop device.
 
 ## Next week's plan
 
-- [ ] Using a data structure maintain context **(More discuss needed)**.
+- [ ] Create a new subprocess, find a way to overwrite its memory.
 
 - [ ] Help writing the paper.
 
