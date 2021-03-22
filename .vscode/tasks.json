@@ -1,0 +1,20 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build PDF",
+            "type": "shell",
+            "options": {
+                "env": {"PATH": "/Users/whexy/miniconda3/bin:/Users/whexy/miniconda3/condabin:/usr/local/opt/openssl@1.1/bin:/usr/local/opt/openjdk/bin:/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources:/Users/whexy/.oh-my-zsh/custom/plugins/git-open:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/Library/TeX/texbin:/usr/local/go/bin:/opt/X11/bin:/Library/Apple/usr/bin:/Users/whexy/.cargo/bin:/usr/local/opt/fzf/bin"}
+            },
+            "command": "pandoc -f markdown-raw_tex --pdf-engine=xelatex slide.md -o slide.pdf -t beamer",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
