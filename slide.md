@@ -102,13 +102,14 @@ All of us are waiting for Yiming's work:
 
 ## Last Week's work
 
-Took a TOEFL test.
+- Read a survy and prepare for the pre.
+- sync
 
 ---
 
 ## Next week's work
 
-Use C++ to run a single assembly code from user input.
+help to write code.
 
 # Wenxuan
 
