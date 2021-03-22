@@ -4,7 +4,7 @@ author: "Haonan Li, Wenxuan Shi, Xueying Zhang"
 institute: "COMPASS"
 urlcolor: blue
 colortheme: "beaver"
-date: "March 16, 2021"
+date: "March 23, 2021"
 theme: "Heverlee"
 aspectratio: 43
 lang: en-US
@@ -44,101 +44,104 @@ Use C++ to run a single assembly code from user input.
 
 ## Last week's plan
 
-- [x] Took a TOEFL test.
+- [x] Use C++ to run a single assembly code from user input.
 
-- [ ] Learning ELF format.
+- [ ] Find an algorithm to replace branch instructions in the assembly code.
+
 
 ---
 
-## Re-Execute
+## Run assembly from user input
 
-### Binary
-Original BIN + ETM Tracing Output + System call hooks + dynamic library hooks ==> New BIN
-
-### Interpreter
-- Dynamically analysis from Original BIN + ETM Tracing Output + System call hooks + dynamic library hooks
-
-- Put up an instruction and change PC register every time.
+![](ipc_step1.png){height=90%}
 
 ---
 
-## Benefit
+## Run assembly from user input
 
+![](ipc_step2.png){height=90%}
 
-### Original BIN: Loop
+---
 
-```assembly
-<loop_begin>:
-	// inside a loop
-	add r0, r0, r1
-	b.ne <loop_begin>
-// out of loop
+## Run assembly from user input
+
+![](ipc_step3.png){height=20%}
+
+### Make a function pointer
+
+C style function pointer:
+
+```c
+void (*foo)(void) = (void (*)(void)) ptr;
 ```
 
-### New Binary
+In a normal C function, `sp (x29)` and `ra (x30)` are stored in the stack. We currently need to store that, too. But **eventually**, we will come up with an idea to maintain context.
 
-```assembly
-add r0, r0, r1
-add r0, r0, r1
-add r0, r0, r1
-add r0, r0, r1
-... // maybe 1,000,000 times?
-add r0, r0, r1
+### Invoke the function pointer
+And then, try to execute:
+
+```c
+foo();
 ```
 
 ---
 
-## Wrap the loop?
+## Run assembly from user input
+
+![](ipc_step4.png){height=90%}
+
+---
+
+## Run assembly from user input
+
+![](ipc_step5.png){height=90%}
+
+---
+
+## Run assembly from user input
+
+![](ipc_step6.png){height=90%}
+
+---
+
+## Memory Allocation
+
+`mprotect()` can only change the permission of a certain **page** (coarse-grained). A better approach is to preserve a section in the memory at compile time using a **link script**.
+
+![](ipc_step7.png){height=90%}
+
+---
+
+## One more thing: Switch from SVN to GIT
 
 ::: columns
 
-:::: {.column width="20%"}
+:::: column
 
-![](no_wrap.png){height=90%}
+Looks well on mobile device.
+
+![](email_report_iPhone.JPEG){height=70%}
 
 ::::
 
-:::: {.column width="80%"}
+:::: column
 
-- What if we wrap the loop just like the original binary does?
+Looks great on desktop device.
 
-- But, how to solve the Data Race problem?
+*(Outlook, Mac Mail App)*
 
-- One possible solution is to wrap as much code as we can.
+![](email_report_screenshot.png){height=80%}
 
-:::: 
+::::
 
 :::
 
 ---
 
-## "BIN Interpreter"
-
-- Put an instruction to the execution queue, and move PC to the address.
-
-- Put the instruction to the exact position in the virtual memory as it is in the original binary.
-
-
----
-
-## One more thing
-
-### "Hook the libC": Dynamic injection
-
-Environment variable `LD_PRELOAD`: Linker will first load the dynamic library set in the `LD_PRELOAD` before linking all the dynamic library.
-
-
-. . .
-
-### Security Research & CTF
-Dynamic injection is quite frequently used in the CTF challanges. 
-
-`\color{gray} Please join us in the SUSTech CTF team, training carried on every Saturday.`{=latex}
-
----
-
 ## Next week's plan
 
-- [ ] Use C++ to run a single assembly code from user input.
+- [ ] Using a data structure maintain context **(More discuss needed)**.
+
+- [ ] Help writing the paper.
 
 - [ ] Find an algorithm to replace branch instructions in the assembly code.
