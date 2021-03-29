@@ -4,206 +4,65 @@ author: "Haonan Li, Wenxuan Shi, Xueying Zhang"
 institute: "COMPASS"
 urlcolor: blue
 colortheme: "beaver"
-date: "March 23, 2021"
+date: "March 30, 2021"
 theme: "Heverlee"
 aspectratio: 43
 lang: en-US
 marp: true
 ---
+
 # Haonan
 
 ## Plan of Last Week
 
-- Improve the syscall capturing
-- Paper writing
+- Paper Writing:
+  - Write an detaild outline for paper
+  - Write a part of **Design**, and **Implementation**, rewrite **introduction**
+- Continue to improve syscall capturing
 
 ---
-
 
 ## Actual Progress
 
-*All are in progress*
-
-- syscall capture: share memory between kernel space with user space
-- Paper writing: finsh outline *(for every section)* and section **Intoducton** *(but needs to be rewritten)* 
-- Talk with Zhenyu for many times...
-
----
-
-## Share Memory
-
-see: [Stack Overflow](https://stackoverflow.com/questions/36762974/how-to-use-mmapproc-shared-memory-between-kernel-and-userspace) or my [github](https://github.com/Tert-butyllithium/remapping-driver)
-
-Basic idea: share by **physical address**
-
-### Some Special Techniques:
-
-- Share *file* : `/proc/...`
-- Create files by specific their file operation handlers..
-
----
-
-## Manually Specify File Operation Handlers
-
-```c
-static const struct file_operations phymem_info_fops = {
-    .owner = THIS_MODULE,
-    .open = proc_open_meminfo,
-    .read = seq_read,
-    .llseek = seq_lseek,
-    .release = seq_release};
-
-static const struct file_operations mmap_fops = {
-    .owner = THIS_MODULE,
-    .mmap = proc_mmap};
-```
-
-
----
-
-## Share Memory
-
-see: [Stack Overflow](https://stackoverflow.com/questions/36762974/how-to-use-mmapproc-shared-memory-between-kernel-and-userspace) or my [github](https://github.com/Tert-butyllithium/remapping-driver)
-
-Basic idea: share by **physical address**
-
-### Some Special Techniques:
-
-- Share *file* : `/proc/...`
-- Create files by specific their function handlers..
-- marco `__pa` and `__va` in kernel...
-
-
----
-
-## Paper Writing 
-
-### Problem: ``Single Thread"
-All of us are waiting for Yiming's work:
-
-- Performance test
-- More POCs
-- Some works about concurrency bug
-
-
----
-
-## Plan for Next Week
-
 - Paper Writing:
-	- Write an detaild outline for paper
-	- Write a part of **Design**, and **Implementation**, rewrite **introduction**
-- Continue to improve syscall capturing, if `sysdig` is really not enough (`25%` overhead in *UnixBench*)
-- Take part of Yiming's work: evaluation, more POCs...
 
-# Xueying
+  - detaild outline (partially completed)
+  - finish desgin for my part (also for may graduation project)
 
----
-
-## Last Week's work
-
-- Read a survy and prepare for the pre.
-- sync
+- syscall capture: finish kernel part (_but..._)
+- finish some performance test...
 
 ---
 
-## Next week's work
+## Paper Writing
 
-help to write code.
+I have spend two and a half days for my graduation report...
 
-# Wenxuan
+### Zhenyu's suggestion
 
----
+``The graduation report can be written in random words as no one cares.”
 
-## Last week's plan
-
-- [x] Use C++ to run a single assembly code from user input.
-
-- [ ] Find an algorithm to replace branch instructions in the assembly code.
-
+``You should focus on your project”
 
 ---
 
-## Run assembly from user input
-
-![](ipc_step1.png){height=90%}
-
----
-
-## Run assembly from user input
-
-![](ipc_step2.png){height=90%}
-
----
-
-## Run assembly from user input
-
-![](ipc_step3.png){height=20%}
-
-### Make a function pointer
-
-C style function pointer:
-
-```c
-void (*foo)(void) = (void (*)(void)) ptr;
-```
-
-In a normal C function, `sp (x29)` and `ra (x30)` are stored in the stack. We currently need to store that, too. But **eventually**, we will come up with an idea to maintain context.
-
-### Invoke the function pointer
-And then, try to execute:
-
-```c
-foo();
-```
-
----
-
-## Run assembly from user input
-
-![](ipc_step4.png){height=90%}
-
----
-
-## Run assembly from user input
-
-![](ipc_step5.png){height=90%}
-
----
-
-## Run assembly from user input
-
-![](ipc_step6.png){height=90%}
-
----
-
-## Memory Allocation
-
-`mprotect()` can only change the permission of a certain **page** (coarse-grained). A better approach is to preserve a section in the memory at compile time using a **link script**.
-
-![](ipc_step7.png){height=90%}
-
----
-
-## One more thing: Switch from SVN to GIT
+## Syscall Capture
 
 ::: columns
 
 :::: column
 
-Looks well on mobile device.
-
-![](email_report_iPhone.JPEG){height=70%}
+![](arch.pdf){width=100%}
 
 ::::
 
 :::: column
 
-Looks great on desktop device.
+\vspace{40pt}
 
-*(Outlook, Mac Mail App)*
-
-![](email_report_screenshot.png){height=80%}
+- Three parts: _hook_, _filter_, _and buffer_
+- Current challenge: transfer records to **user space**
+- Our motivation: sysdig with significant overhead
 
 ::::
 
@@ -211,10 +70,158 @@ Looks great on desktop device.
 
 ---
 
-## Next week's plan
+## Add a lock
+
+```cpp
+  spin_lock_irq(&small_buf_lock);
+
+  sprintf(small_buf,...);
+  write_to_buffer(small_buf, &buf_offset);
+
+  spin_unlock_irq(&small_buf_lock);
+```
+
+###
+
+this spin lock hardly affects performance during our test
+
+---
+
+## Performance Test: Environment
+
+- tool: `ab` - Apache HTTP server benchmarking tool
+- settings: 500,000 requests with concurrency of 1,000
+  - `ab -n 500000 -c 1000 http://localhost`
+  - `nginx` default page _Welcome to nginx!_
+  - Juno board (all cores up) with Debian GNU/Linux 10
+
+---
+
+## Test result
+
+\small
+| | **overall time** | **requests per second** |
+| ------------------------------- | ----------------- | ----------------------- |
+| **baseline** | 119.122 | 4197.38 |
+| **sysdig** | 137.100 (+15.09%) | 3646.98 (-13.11%) |
+| **sysdig (without output)** | 132.513 (+11.24%) | 3773.20 (-10.10%) |
+| **our capture (without fetch)** | 129.470 (+8.69%) | 3861.90 (-7.99%) |
+| **our capture (without write)** | 119.158 (+0.30%) | 4196.10 (-0.30%) |
+Table: Test reuslts in different tools
+
+### Two points
+
+- sydig introduce considerable overhead not only due to its saving to file
+- our capture is unreasonably slow in writing to buffer
+
+---
+
+## Bottleneck analysis for our capturing system
+
+### What did I do in my `writing_to_buffer`?
+
+a `strncpy` and some addition and subtraction operations
+
+\vspace{10pt}
+
+```cpp
+void write_to_buffer(const char *src, int *offset) {
+  char *buffer_addr = kernel_memaddr;
+  unsigned long str_len = strlen(src) + 1;
+  unsigned long str_end = (*offset) + str_len;
+
+  if(str_end > BUF_SIZE){
+    *offset = 0;
+    str_end = str_len;
+  }
+  strncpy(buffer_addr + (*offset), src, str_len);
+  *offset = str_end;
+}
+```
+
+---
+
+## Bottleneck analysis (cont.)
+
+- It seems the cause is `strncpy`? But what's the difference between `strncpy` with `sprintf`
+- Zhenyu's recommendation: multithread ...
+- The only difference: `char small_buf[128]` vs. ` __get_free_pages(GFP_KERNEL, PAGE_ORDER);`
+- **!!! Don not trust StackOverflow unconditionally**
+
+---
+
+## Test result (cont.)
+
+\small
+| | **overall time** | **requests per second** |
+| ------------------------------- | ----------------- | ----------------------- |
+| **baseline** | 119.122 | 4197.38 |
+| **our capture (without fetch)** | 129.470 (+8.69%) | 3861.90 (-7.99%) |
+| **our capture (without write)** | 119.158 (+0.30%) | 4196.10 (-0.30%) |
+| **our capture (`buffer[1024]`)** | 120.965 (+1.55%) | 4133.41 (-1.52%) |
+Table: Test reuslts in different conditions
+
+### Next problems
+
+- How about `kmalloc` or `vmalloc`?
+- Could larger buffer further reduce the overhead?
+
+---
+
+## Plan for Next Week
+
+- Pass the midterm defence _casually_
+- Finish my syscall capturing
+- Take part of Yiming's work: evaluation, more POCs...
+
+# Wenxuan
+
+---
+
+## Last week's plan
 
 - [ ] Create a new subprocess, find a way to overwrite its memory.
 
 - [ ] Help writing the paper.
 
-- [ ] Find an algorithm to replace branch instructions in the assembly code.
+---
+
+## What did I do last week?
+
+| Day       | Main                                         |
+| --------- | -------------------------------------------- |
+| Wednesday | NUS Application Material Preparation         |
+| Thursday  | NUS Application                              |
+| Friday    | SUSTech Global Interview for NUS Application |
+| Saterday  | Courses Deadline                             |
+| Sunday    | Two interviews from Tencent and ByteDance    |
+
+---
+
+## Target
+
+### Restore the memory layout: From coredump
+
+After the subprocess is forked, cover its memory layout with coredump.
+
+### Control the execution
+
+Stop, reverse, jump, wander in the binary.
+
+---
+
+## How GDB control its target?
+
+`ptrace()`: read and write text, data, stack, and register of another process.
+
+gdb breakpoint: replace the breakpoint instruction in the text section, trap and send a signal to gdb process (stop the process), and then replace the instruction back.
+
+---
+
+## Next week's plan
+
+- [ ] Use `ptrace()` to create a subprocess restored from coredump.
+
+- [ ] Help writing the paper.
+
+- [ ] Group Project Defence (Week 8).
