@@ -25,6 +25,7 @@ marp: true
 - try ptrace() but failed.
   - pt_regs VS. user_pt_regs
   - PTRACE_ATTACH failed with unknowable reason
+  - Use child process: find PC value failed. Find data failed.
 - Many programs can be found that use ptrace() for code injection, but most of them are implemented under x86.
 
 
