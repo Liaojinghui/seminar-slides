@@ -128,20 +128,9 @@ char handler_string[][32] = {
 
 ---
 
-## Plan of Last Week
+## Plan of Last Week & This Week's Work & next week's plan
 
-- help to write code
-
----
-
-## This Week's Work
-
-- Build the environment of ETM with the help with Yiming
-- try ptrace() but failed.
-  - pt_regs VS. user_pt_regs
-  - PTRACE_ATTACH failed with unknowable reason
-  - Use child process: find PC value failed. Find data failed.
-- Many programs can be found that use ptrace() for code injection, but most of them are implemented under x86.
+Write paper
 
 
 # Wenxuan
