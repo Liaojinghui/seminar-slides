@@ -128,9 +128,17 @@ char handler_string[][32] = {
 
 ---
 
-## Plan of Last Week & This Week's Work & next week's plan
+## Last Week's plan & This Week's Work
 
 Write paper
+
+![last week's work](https://github.com/COMPASS-ReplayB/seminar-slides/blob/main/images/0420.png)
+
+---
+
+## Next week's plan
+
+Write paper (add a picture about concurrency bugs and more references).
 
 
 # Wenxuan
