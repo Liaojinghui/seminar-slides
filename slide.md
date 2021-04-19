@@ -132,7 +132,7 @@ char handler_string[][32] = {
 
 Write paper
 
-![last week's work](https://github.com/COMPASS-ReplayB/seminar-slides/blob/main/images/0420.png)
+![last week's work](images/0420.png)
 
 ---
 
