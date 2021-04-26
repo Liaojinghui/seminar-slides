@@ -80,7 +80,7 @@ perform well on an average program (*while there is no * `read`)
 
 - Last week's plan: write paper
 - This week's work: write paper (10%), do my homework and project (90%)
-- Nest week's plan: have more time to revise my part. 
+- Nest week's plan: revise my part, intensively. 
 
 # Wenxuan
 
