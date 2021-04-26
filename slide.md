@@ -76,18 +76,11 @@ perform well on an average program (*while there is no * `read`)
 
 ---
 
-## Last Week's plan & This Week's Work
+## Xueying
 
-Write paper
-
-![last week's work](images/0420.png){height=100%}
-
----
-
-## Next week's plan
-
-Write paper (add a picture about concurrency bugs and more references).
-
+- Last week's plan: write paper
+- This week's work: write paper (10%), do my homework and project (90%)
+- Nest week's plan: have more time to revise my part. 
 
 # Wenxuan
 
