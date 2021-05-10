@@ -106,3 +106,21 @@ They gave us much advice.
 
 who gave up the vacation to be with me and supported me in the midst of
 depression, loneliness and pain :)
+
+# Xueying
+
+---
+
+## self-examination
+
+1. Didn't work hard enough
+2. Be an active learner
+3. Be confident
+
+---
+
+## Thanks 
+
+I am extremely grateful to all my teammates and Zhenyu.
+
+I had learned a lot from this experience.
