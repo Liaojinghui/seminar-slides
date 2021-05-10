@@ -11,40 +11,9 @@ lang: en-US
 marp: true
 ---
 
-# INTRODUCTION
+# Wenxuan
 
-## Background
-
-::: columns
-
-:::: {.column width="60%"}
-
-During last month, the Arm ETM group managed to submit a paper.
-
-The group contains
-
-- a Ph.D student
-- a first-year master student
-- a senior undergraduate student
-- two junior undergraduate students
-
-::::
-
-:::: {.column width="40%"}
-
-![](images/paper.png)
-
-::::
-:::
-
-# DESIGN & IMPLEMENTAION
-
----
-
-## Challanges
-
-To many of us, it's the first time to write a paper.
-We encountered many challenges.
+## Tips on writing and revising a paper
 
 - How to quickly check the grammar errors in a paper.
 
@@ -70,11 +39,6 @@ To quickly copy lines in paper, first change the first line in LaTeX
 ```
 
 and use the command line tool `pdftotext`.
-
-
-
-
-# EVALUATION
 
 ---
 
@@ -117,8 +81,6 @@ Haonan made the `earliest' edit in a day
 | Xueying | 20            | +760      | -461         |
 | Fengwei | 21            | +144      | -129         |
 | Zhenyu  | 40            | +2023     | -949         |
-
-# ACKNOWLEDGEMENT
 
 ---
 
