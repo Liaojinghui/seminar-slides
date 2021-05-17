@@ -77,7 +77,7 @@ marp: true
 ## Paper Connection of R2
 
 Powered by Connected Papers
-![](r2_connect.png){width=90%}
+![](images/r2_connect.png){width=90%}
 
 ---
 
