@@ -89,10 +89,12 @@ Powered by Connected Papers
 - looks like the only way to handle asynchronous events is, add a delay
 
 ---
+
 ## Plan for Next Week
 
 - Read paper, read paper, read paper, desgin for library hook
 - Prepare for apper sharing: Mozilla's rr (**still NOT for next week**)
+
 
 # Wenxuan
 
