@@ -31,6 +31,24 @@ marp: true
 
 ---
 
+## Schedule for future
+
+\footnotesize
+| **Task**                                                    | **Assignee** | **Priority** |
+| ----------------------------------------------------------- | ------------ | ------------ |
+| Improve syscord: more syscalls, size optimization           | Xueying      | 1            |
+| Fix bug: control flow timestamp position error              | Yuxin        | 1            |
+| Using PMI to dump ETM automatically (ref: HART)             | Wenxuan      | 1            |
+| More sequence bugs                                          | Yiming       | 2            |
+| Analysis automatically (e.g., apply patterns)               | Yiming       | 2            |
+| Non-deterministic handlers: interrupt, trap, signal         | Haonan       | 2            |
+| Improve library hook                                        | Yuxin        | 3            |
+| Find a general way to handle library functions              | Haonan       | 3            |
+| Scale up: for large size application, for long-term running | Yiming       | 4            |
+| Replay machine                                              | Wenxuan      | 5            |
+
+---
+
 ## Syscord: a bug
 
 - cannot write file after 2.1 G (found in Apr 24, 3 weeks ago)
