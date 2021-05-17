@@ -134,14 +134,20 @@ The parameter of `process_vm_writev()`: pid, target address
 
 # Xueying
 
+---
+
 ## Last week's plan
 
 Replay machine
+
+---
 
 ## This week's work
 
 1. add the ability to read from a file
 2. understanding syscord and study syscall
+
+---
 
 ## Next week's plan 
 
