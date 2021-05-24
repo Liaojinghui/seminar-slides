@@ -19,33 +19,31 @@ marp: true
 - Determine what the next of our project, make more improvement?
 - Prepare for apper sharing: Mozilla's rr
 
-
 ---
 
 ## Progress
 
 - Finished graduation project before May 14, 11:58 PM
 - Discussed about the future work last Friday.
-- Finding many papers 
-
+- Finding many papers
 
 ---
 
 ## Schedule for future
 
 \footnotesize
-| **Task**                                                    | **Assignee** | **Priority** |
+| **Task** | **Assignee** | **Priority** |
 | ----------------------------------------------------------- | ------------ | ------------ |
-| Improve syscord: more syscalls, size optimization           | Xueying      | 1            |
-| Fix bug: control flow timestamp position error              | Yuxin        | 1            |
-| Using PMI to dump ETM automatically (ref: HART)             | Wenxuan      | 1            |
-| More sequence bugs                                          | Yiming       | 2            |
-| Analysis automatically (e.g., apply patterns)               | Yiming       | 2            |
-| Non-deterministic handlers: interrupt, trap, signal         | Haonan       | 2            |
-| Improve library hook                                        | Yuxin        | 3            |
-| Find a general way to handle library functions              | Haonan       | 3            |
-| Scale up: for large size application, for long-term running | Yiming       | 4            |
-| Replay machine                                              | Wenxuan      | 5            |
+| Improve syscord: more syscalls, size optimization | Xueying | 1 |
+| Fix bug: control flow timestamp position error | Yuxin | 1 |
+| Using PMI to dump ETM automatically (ref: HART) | Wenxuan | 1 |
+| More sequence bugs | Yiming | 2 |
+| Analysis automatically (e.g., apply patterns) | Yiming | 2 |
+| Non-deterministic handlers: interrupt, trap, signal | Haonan | 2 |
+| Improve library hook | Yuxin | 3 |
+| Find a general way to handle library functions | Haonan | 3 |
+| Scale up: for large size application, for long-term running | Yiming | 4 |
+| Replay machine | Wenxuan | 5 |
 
 ---
 
@@ -60,11 +58,10 @@ marp: true
 
 ## Discussion for future work
 
-- Improve syscord: 
+- Improve syscord:
   - More syscalls, optimization on performance and record size
   - More Non-deterministic events: interrupt, trap, signal
 - Library Hook: find a general way to handle library functions
-
 
 ---
 
@@ -81,14 +78,13 @@ marp: true
 ## Try to address these problems: paper reading
 
 \tiny
-| Name     | Titile                                                       | Author Affiliation  | Conference            | Heighlight                                    |
+| Name | Titile | Author Affiliation | Conference | Heighlight |
 | -------- | ------------------------------------------------------------ | ------------------- | --------------------- | --------------------------------------------- |
-| RR       | **Engineering** Record And Replay For **Deployability**      | Mozilla             | ATC'17         | RnR system                                    |
-| R2       | An Application-Level Kernel for Record and Replay            | Microsoft           | OSDI'08               | Library                                       |
-| Castor   | Towards Practical **Default-On** Multi-Core Record/Replay    | Stanford            | ASPLOS'17             | Deafult On                                    |
-| `liblog` | Replay Debugging for Distributed Applications                | Berkeley        | ATC'06         | Lib Log                                       |
-| Scribe   | Transparent, Lightweight Application Execution Replay on Commodity Multiprocessor Operating Systems | Columbia  | SIGMETRICS’10 (CCF-B) | 2.5% overhead? Re-execution instrad of replay |
-
+| RR | **Engineering** Record And Replay For **Deployability** | Mozilla | ATC'17 | RnR system |
+| R2 | An Application-Level Kernel for Record and Replay | Microsoft | OSDI'08 | Library |
+| Castor | Towards Practical **Default-On** Multi-Core Record/Replay | Stanford | ASPLOS'17 | Deafult On |
+| `liblog` | Replay Debugging for Distributed Applications | Berkeley | ATC'06 | Lib Log |
+| Scribe | Transparent, Lightweight Application Execution Replay on Commodity Multiprocessor Operating Systems | Columbia | SIGMETRICS’10 (CCF-B) | 2.5% overhead? Re-execution instrad of replay |
 
 ---
 
@@ -113,25 +109,129 @@ Powered by Connected Papers
 - Read paper, read paper, read paper, desgin for library hook
 - Prepare for apper sharing: Mozilla's rr (**still NOT for next week**)
 
-
 # Wenxuan
 
 ---
 
-## Last week's plan
+## Plan
 
-Replay machine
+Due to our meeting, I have two main targets:
+
+1. using PMI to help collect ETM log periodicly.
+2. Implement a Replay Machine for online tracing stage.
 
 ---
 
-## This week's work
+## Interrupt handler in kernel
 
-Use `process_vm_writev()` to change the data of the execution segment of the target process at runtime, directly.
+Much easier than register a interrupt handler in ATF.
 
-The parameter of `process_vm_writev()`: pid, target address 
+```c
+unsigned long irq_flags = IRQF_PERCPU 
+                 | IRQF_NOBALANCING 
+                 | IRQF_NO_THREAD 
+                 | IRQF_SHARED;
+request_irq(irq_id, pmu_irq_handler, 
+            irq_flags, "pmi_handler", 
+            (void*)pmu_irq_handler);
+```
 
-- step1: start target process, register interrupt handler and wait on signal
-- step2: start another process, call `process_vm_writev()`, send a signal
+---
+
+## Tips on handle interrupt in kernel
+
+### Interrupt Mapping
+- Interrupt ID in kernel (logic interrupt ID) is different from the hardware interrupt ID.
+- Logic interrupt ID is not always adding a simple offset.
+- Linux kernel remains logic interrupt ID 36, 37, 38, 39, 40, 41 for PMU in Juno board r2.
+
+### Exclusive Handler
+- Normally an interrupt can only have one handler.
+- Unless that irq_flag contains `IRQF_SHARED`.
+
+---
+
+## Register a co-existing handler 
+
+After everything is set up, our kernel module successfully handles PMI.
+
+![](images/irq.png)
+
+---
+
+## One more question: why use interrupt mapping?
+
+- Interrupt Controller => IRQ Chip => Multi-level Interrupt Controller
+- multi IRQ Domain (where IRQ handler takes effect)
+ 
+### Mapping Models
+
+- Linear Mapping. `irq_domain_add_linear()`, map similar interrupts together. (e.g. our Arm PMI)
+- Radix Tree Mapping. `irq_domain_add_tree()`, use hardware id as lookup key in the radix tree. (e.g. MIPS hardware)
+
+---
+
+## Replay Machine
+
+Since we got a ridiculous score from the professor ...
+
+### Experiment
+
+Replay a simple binary with no *non-deterministic* factors.
+
+---
+
+## Experiment
+
+This is the control flow we reconstructed before.
+
+![](images/control_flow.png)
+
+---
+
+## Construct
+
+- disassemble
+- use ETM output to locate code blocks
+- collect "waterfall" control flow
+
+We consider the "waterfall" control flow unacceptably large. We are going to construct a block dynamically.
+
+
+## Re-Execute
+
+::: columns
+
+:::: column
+
+![](images/replay.png)
+
+::::
+
+:::: column
+
+. . .
+
+Segmentation fault.
+
+### Registers
+- The initial state of registers are different.
+- Store and restore registers (user space context switch).
+
+### Sections
+- Origin data, bss memory section are not copied.
+- Copy static memory sections like data and bss.
+
+::::
+
+:::
+
+---
+
+## Next Week's Plan
+
+- Store and restore registers
+- Final Exam :(
 
 # Xueying
 
@@ -147,11 +247,10 @@ Replay machine & study syscall
 
 1. Spent most time on my sinal assignments
 2. searched some syscalls: most (more than half) of the syscalls are not useful for the data recovery.
-![](images/0524.jpg)
+   ![](images/0524.jpg)
 
 ---
 
-## Next week's plan 
+## Next week's plan
 
 Replay machine
-
