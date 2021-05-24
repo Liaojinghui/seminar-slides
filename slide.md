@@ -139,18 +139,19 @@ The parameter of `process_vm_writev()`: pid, target address
 
 ## Last week's plan
 
-Replay machine
+Replay machine & study syscall
 
 ---
 
 ## This week's work
 
-1. add the ability to read from a file
-2. understanding syscord and study syscall
+1. Spent most time on my sinal assignments
+2. searched some syscalls: most (more than half) of the syscalls are not useful for the data recovery.
+![](images/0524.jpg)
 
 ---
 
 ## Next week's plan 
 
-Replay machine & study syscall
+Replay machine
 
