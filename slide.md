@@ -239,15 +239,13 @@ Segmentation fault.
 
 ## Last week's plan
 
-Replay machine & study syscall
+Replay machine
 
 ---
 
 ## This week's work
 
-1. Spent most time on my sinal assignments
-2. searched some syscalls: most (more than half) of the syscalls are not useful for the data recovery.
-   ![](images/0524.jpg)
+take final exams.
 
 ---
 
