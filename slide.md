@@ -1,36 +1,78 @@
 ---
-title: "Arm ETM/PMU"
-author: "Yiming Zhang, Yuxin Hu, Haonan Li, Wenxuan Shi, Xueying Zhang"
-institute: "COMPASS"
+title: "Idea Capsule for Automata"
+author: "Jinghui Liao"
+institute: "Automata Consultant"
 urlcolor: blue
 colortheme: "beaver"
-date: "Jun 8, 2021"
+date: "Sep 26, 2021"
 theme: "Heverlee"
 aspectratio: 43
 lang: en-US
 marp: true
 ---
 
-# Haonan
+# Secrecy Escrow
 
-## Plan of Last Week
+## What is it?
 
-- Prepare for baccalaureate defense (Jun. 3)
-- Try to Conduct a demo for auto code generation... (GuGuGu)
-- Learning something about library fuzzing (...)
+- A Safe for the Blockchain
+- Like a bank, where user can keep their secrect document (will for example)
 
----
+![](images/Safe.jpeg)
 
-## HOW to perceive the interrupt?
-
-### ReVirt: OSDI'02
-x86 processors provide a hardware performance counter that can be configured to compute the number of branches that have executed since the last interrupt [Int01]
-\newline
-
-\footnotesize [Int01] \textit{The IA-32 Intel Architecture Software Developer’s Manual, Volume 3: System Programming Guide. Technical report, Intel Corporation, 2001.}
 
 ---
 
+## Why we need it?
+
+- Everything on Blockchain is public.
+
+    - Transaction
+    - Amount of assets
+    - Contract call parameters
+
+- We need to keep something in secrect (for a certain period of time).
+        
+    - Answer of a question
+    - Last words
+    - Moves of a game player
+    - Time capsule
+    - Secret documents
+---
+
+## Why Automata?
+
+- It is hard to keep data secrect in a public system
+- We need a decryption key management mechanism
+- The decryption key should not be controlled by or known to anyone
+- Automata has TEE to provide isolated environment
+
+---
+
+# Account Escrow
+
+## What is it?
+
+- User empower Automata to control their account by giving or creating private key in Automata
+- Making Automata more like a centrolized service provider
+- Or deposit token to Automata owned account
+
+## How we gonna use it?
+- Allowing automata to insert special values into the Transaction
+    - Random number
+    - Decrypted secrecy 
+- Allowing Automata to trigger smart contract when special even occurs
+    - Delayed contract state update
+    - Recursive contract state update
+    - Contract state update on special event (date, block height).
+
+## Why Automata?
+
+- Automata is a middlewire, it monitor the Blockchain state all the time
+- TEE ensures that Automata will not abuse the user token
+
+
+<!-- 
 ## Library Hook: Importance, Challenges, Solutions
 
 Challenge:
@@ -203,4 +245,4 @@ take final exams.
 
 ## Next week's plan
 
-Replay machine
+Replay machine -->
