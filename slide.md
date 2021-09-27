@@ -13,7 +13,7 @@ marp: true
 
 # Problems before everything
 
-Should a middlewire touches the user account?
+Should a middlewire touch the user account?
 
 # Secrecy Escrow
 
@@ -41,7 +41,7 @@ Should a middlewire touches the user account?
     - Moves of a game player
     - Time capsule
     - Secret documents
-    
+
 ---
 
 ## Why Automata?
