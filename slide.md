@@ -61,6 +61,7 @@ Should a middlewire touch the user account?
 - Making Automata more like a centrolized service provider
 - Or deposit token to Automata owned account
 
+---
 ## How we gonna use it?
 - Allowing automata to insert special values into the Transaction
     - Random number
@@ -70,6 +71,7 @@ Should a middlewire touch the user account?
     - Recursive contract state update
     - Contract state update on special event (date, block height).
 
+---
 ## Why Automata?
 
 - Automata is a middlewire, it monitor the Blockchain state all the time
