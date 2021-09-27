@@ -5,7 +5,7 @@ institute: "Automata Consultant"
 urlcolor: blue
 colortheme: "beaver"
 date: "Sep 26, 2021"
-theme: "Heverlee"
+theme: "moon"
 aspectratio: 43
 lang: en-US
 marp: true
