@@ -11,6 +11,10 @@ lang: en-US
 marp: true
 ---
 
+# Problems before everything
+
+Should a middlewire touches the user account?
+
 # Secrecy Escrow
 
 ## What is it?
@@ -19,7 +23,6 @@ marp: true
 - Like a bank, where user can keep their secrect document (will for example)
 
 ![](images/Safe.jpeg)
-
 
 ---
 
@@ -38,6 +41,7 @@ marp: true
     - Moves of a game player
     - Time capsule
     - Secret documents
+    
 ---
 
 ## Why Automata?
@@ -70,6 +74,7 @@ marp: true
 
 - Automata is a middlewire, it monitor the Blockchain state all the time
 - TEE ensures that Automata will not abuse the user token
+
 
 
 <!-- 
