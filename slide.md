@@ -13,7 +13,7 @@ marp: true
 
 # Problems before everything
 
-Should a middlewire touch the user account?
+Should a middleware touch the user account?
 
 # Secrecy Escrow
 
@@ -77,5 +77,5 @@ Should a middlewire touch the user account?
 
 ## Why Automata?
 
-- Automata is a middlewire, it monitor the Blockchain state all the time
+- Automata is a middleware, it monitor the Blockchain state all the time
 - TEE ensures that Automata will not abuse the user token
