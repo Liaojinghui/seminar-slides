@@ -5,7 +5,7 @@ institute: "Wayne State University, SusTech"
 urlcolor: blue
 colortheme: "beaver"
 date: "Sep 28, 2021"
-theme: "Warsaw"
+theme: "Heverlee"
 aspectratio: 43
 lang: en-US
 marp: true
