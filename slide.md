@@ -1,11 +1,11 @@
 ---
-title: "Idea Capsule for Automata"
+title: "Runtime Random Number for Blockchain Smart Contract"
 author: "Jinghui Liao"
-institute: "Automata Consultant"
+institute: "Wayne State University, SusTech"
 urlcolor: blue
 colortheme: "beaver"
-date: "Sep 26, 2021"
-theme: "Heverlee"
+date: "Sep 28, 2021"
+theme: "Copenhagen"
 aspectratio: 43
 lang: en-US
 marp: true
