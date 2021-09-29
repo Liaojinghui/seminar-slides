@@ -79,3 +79,7 @@ marp: true
 # Implementation & Evaluation?
 - Our design is based on the BFT consensus
 - Will implement it on NEO
+- Evaluation will based on (one and multiple random numbers)
+    - The number of transactions required
+    - The transaction fee required
+    - The time it takes to acquire a random number
