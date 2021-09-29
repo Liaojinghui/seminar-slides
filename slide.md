@@ -1,6 +1,6 @@
 ---
 title: "Runtime Random Number for Blockchain Smart Contract"
-author: "Jinghui Liao\n Zhanbo Wang"
+author: "Jinghui Liao, Zhanbo Wang"
 institute: "Wayne State University, SusTech"
 urlcolor: blue
 colortheme: "beaver"
@@ -11,71 +11,71 @@ lang: en-US
 marp: true
 ---
 
-# Problems before everything
+<!-- # Runtime Random Number for Blockchain Smart Contract
 
-Should a middleware touch the user account?
+### Jinghui Liao
+### Zhanbo Wang
 
-# Secrecy Escrow
+### WSU & SusTech
 
-## What is it?
+### Sep 28, 2021
+--- -->
+# What we want to do?
 
-- A Safe for the Blockchain
-- Like a bank, where user can keep their secrect document (will for example)
-
-![](images/Safe.jpeg)
-
----
-
-## Why we need it?
-
-- Everything on Blockchain is public.
-
-    - Transaction
-    - Amount of assets
-    - Contract call parameters
-
-- We need to keep something in secrect (for a certain period of time).
-        
-    - Answer of a question
-    - Last words
-    - Moves of a game player
-    - Time capsule
-    - Secret documents
+- Anti-MEV attack
+- Random number for smart contract at runtime.
 
 ---
 
-## Why Automata?
+# Why we want to do it?
 
-- It is hard to keep data secrect in a public system
-- We need a decryption key management mechanism
-- The decryption key should not be controlled by or known to anyone
-- Automata has TEE to provide isolated environment
+- It is critical to provide random number for smart contract
+    - Randomly select someone
+    - Randomly distribute asset
+    - Randomly determine the rarity
 
----
-
-# Account Escrow
-
-## What is it?
-
-- User empower Automata to control their account by giving or creating private key in Automata
-- Making Automata more like a centrolized service provider
-- Or deposit token to Automata owned account
+- It is hard to generate reliable random number at runtime
+    - No one should know the random value in advance
+    - No one should have control on the random value
+    - There should be only one certain value
+    - The random number should be verifiable
 
 ---
 
-## How we gonna use it?
+# Is there any existing solution?
 
-- Allowing automata to insert special values into the Transaction
-    - Random number
-    - Decrypted secrecy 
-- Allowing Automata to trigger smart contract when special even occurs
-    - Delayed contract state update
-    - Recursive contract state update
-    - Contract state update on special event (date, block height).
+- VRF (Chainlink)
+
+- VDF (Eth2.0)
+
+- BLS (Some other projects)
 
 ---
 
-## Why Automata?
+# What are the technique challenges?
 
-- Automata is a middleware, it monitor the Blockchain state all the time
-- TEE ensures that Automata will not abuse the user token
+- MEV attack
+- BLS setup
+
+---
+
+# What is our solution?
+
+- Anti-MEV 
+    * Split the right of deciding transaction list from the miner
+    * Genrate the transaction list during the consensus
+    * Use BLS to generate the random number
+
+---
+
+# Where are we now? 
+
+- We are the very first project to provide random number for smart contract at runtime
+- We have designed the anti-mev attack solution
+- We have verified the BLS algorithm
+- We are writing the introduction part
+---
+
+# Implementation & Evaluation?
+- Our design is based on the BFT consensus
+- Will implement it on NEO
