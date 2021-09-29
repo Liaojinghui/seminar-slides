@@ -1,6 +1,6 @@
 ---
 title: "Runtime Random Number for Blockchain Smart Contract"
-author: "Jinghui Liao"
+author: "Jinghui Liao\n Zhanbo Wang"
 institute: "Wayne State University, SusTech"
 urlcolor: blue
 colortheme: "beaver"
